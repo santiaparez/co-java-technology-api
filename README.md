@@ -4,10 +4,10 @@
 
 ## Run locally
 ```bash
-# 1) Start dynamodb and the app (Docker)
+# 1) Start MySQL and the app (Docker)
 docker compose up --build
-# Or run only Mongo and start app from IDE
-# docker compose up mongo
+# Or run only MySQL and start app from IDE
+# docker compose up mysql
 # ./gradlew bootRun
 ```
 
@@ -26,7 +26,7 @@ Swagger UI: `http://localhost:8080/swagger-ui.html`
 
 ## Architecture notes
 - **domain/**: pure models (Java records), use cases, domain errors
-- **infrastructure/**: adapters (Reactive Mongo) and mappers
+- **infrastructure/**: adapters (Reactive MySQL via R2DBC) and mappers
 - **web/**: entry points (handlers + router + DTOs)
 
 Errors are JSON: `{ "message": "..." }`.

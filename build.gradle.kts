@@ -14,18 +14,21 @@ repositories { mavenCentral() }
 dependencies {
   implementation("org.springframework.boot:spring-boot-starter-webflux")
   implementation("org.springframework.boot:spring-boot-starter-validation")
-  implementation("software.amazon.awssdk:dynamodb:2.25.54")
-  implementation("software.amazon.awssdk:dynamodb-enhanced:2.25.54")
-  implementation("software.amazon.awssdk:netty-nio-client:2.25.54")
+  implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+  implementation("io.asyncer:r2dbc-mysql:1.1.2")
+  implementation("org.flywaydb:flyway-core")
+  implementation("org.flywaydb:flyway-mysql")
   implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.6.0")
 
-  testImplementation("org.springframework.boot:spring-boot-starter-test")
-  testImplementation("io.projectreactor:reactor-test")
+  runtimeOnly("com.mysql:mysql-connector-j")
+
+  annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
   testImplementation("org.springframework.boot:spring-boot-starter-test")
   testImplementation("io.projectreactor:reactor-test")
   testImplementation("org.mockito:mockito-core")
   testImplementation("org.mockito:mockito-junit-jupiter")
-
+  testImplementation("io.r2dbc:r2dbc-h2")
 }
 
 tasks.test { useJUnitPlatform() }
