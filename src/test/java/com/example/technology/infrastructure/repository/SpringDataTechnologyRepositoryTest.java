@@ -13,10 +13,6 @@ import reactor.core.publisher.Mono;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SpringDataTechnologyRepositoryTest {
-
-  private final R2dbcEntityTemplate template = Mockito.mock(R2dbcEntityTemplate.class);
-  private final SpringDataTechnologyRepository repository = new SpringDataTechnologyRepository(template);
-
   private static TechnologyEntity sampleEntity() {
     TechnologyEntity entity = new TechnologyEntity();
     entity.setId("f-1");
@@ -27,6 +23,8 @@ class SpringDataTechnologyRepositoryTest {
 
   @Test
   void findAllStreamsFromTemplate() {
+    R2dbcEntityTemplate template = Mockito.mock(R2dbcEntityTemplate.class);
+    SpringDataTechnologyRepository repository = new SpringDataTechnologyRepository(template);
     TechnologyEntity entity = sampleEntity();
     Mockito.when(template.select(Mockito.any(Query.class), Mockito.eq(TechnologyEntity.class)))
         .thenReturn(Flux.just(entity));
@@ -40,11 +38,28 @@ class SpringDataTechnologyRepositoryTest {
 
   @Test
   void findByIdUsesTemplate() {
+    R2dbcEntityTemplate template = Mockito.mock(R2dbcEntityTemplate.class);
+    SpringDataTechnologyRepository repository = new SpringDataTechnologyRepository(template);
     TechnologyEntity entity = sampleEntity();
     Mockito.when(template.selectOne(Mockito.any(Query.class), Mockito.eq(TechnologyEntity.class)))
         .thenReturn(Mono.just(entity));
 
     StepVerifier.create(repository.findById("f-1"))
+        .assertNext(franchise -> assertEquals("Acme", franchise.name()))
+        .verifyComplete();
+
+    Mockito.verify(template).selectOne(Mockito.any(Query.class), Mockito.eq(TechnologyEntity.class));
+  }
+
+  @Test
+  void findByNameUsesTemplate() {
+    R2dbcEntityTemplate template = Mockito.mock(R2dbcEntityTemplate.class);
+    SpringDataTechnologyRepository repository = new SpringDataTechnologyRepository(template);
+    TechnologyEntity entity = sampleEntity();
+    Mockito.when(template.selectOne(Mockito.any(Query.class), Mockito.eq(TechnologyEntity.class)))
+        .thenReturn(Mono.just(entity));
+
+    StepVerifier.create(repository.findByName("Acme"))
         .assertNext(franchise -> assertEquals("Acme", franchise.name()))
         .verifyComplete();
 

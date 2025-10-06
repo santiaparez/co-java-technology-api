@@ -24,6 +24,11 @@ public class SpringDataTechnologyRepository {
             .map(TechnologiesMapper::toDomain);
   }
 
+  public Mono<Technology> findByName(String name){
+    return template.selectOne(Query.query(Criteria.where("name").is(name)), TechnologyEntity.class)
+            .map(TechnologiesMapper::toDomain);
+  }
+
   public Mono<Technology> save(Technology franchise){
     var entity = TechnologiesMapper.toEntity(franchise);
     return template.insert(TechnologyEntity.class)
