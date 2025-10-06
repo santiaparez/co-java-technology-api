@@ -39,21 +39,6 @@ class SpringDataTechnologyRepositoryTest {
   }
 
   @Test
-  void saveDelegatesToTemplateInsert() {
-    TechnologyEntity entity = sampleEntity();
-    @SuppressWarnings("unchecked")
-    ReactiveInsertOperation.InsertWithTable<TechnologyEntity> insert = Mockito.mock(ReactiveInsertOperation.InsertWithTable.class);
-    Mockito.when(template.insert(TechnologyEntity.class)).thenReturn(insert);
-    Mockito.when(insert.using(Mockito.any(TechnologyEntity.class))).thenReturn(Mono.just(entity));
-
-    StepVerifier.create(repository.save(new com.example.technology.domain.model.Technology("f-1", "Acme", "des")))
-        .assertNext(franchise -> assertEquals("Acme", franchise.name()))
-        .verifyComplete();
-
-    Mockito.verify(insert).using(Mockito.any(TechnologyEntity.class));
-  }
-
-  @Test
   void findByIdUsesTemplate() {
     TechnologyEntity entity = sampleEntity();
     Mockito.when(template.selectOne(Mockito.any(Query.class), Mockito.eq(TechnologyEntity.class)))

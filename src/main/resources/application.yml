@@ -2,23 +2,18 @@ spring:
   application:
     name: technology-api
   r2dbc:
-    url: r2dbc:pool:mysql://localhost:3306/technology
-    username: tech_user
-    password: tech_pass
-  flyway:
-    enabled: true
-    url: jdbc:mysql://localhost:3306/technology
-    user: tech_user
-    password: tech_pass
+    url: r2dbc:pool:mysql://localhost:3306/bootcamp
+    username: root
+    password: 1234
 
 server:
   port: 8080
 
 app:
   datasource:
-    host: ${DB_HOST:localhost}
-    port: ${DB_PORT:3306}
-    database: ${DB_NAME:technology}
-    username: ${DB_USER:tech_user}
-    password: ${DB_PASSWORD:tech_pass}
+    host: localhost
+    port: 3306
+    database: bootcamp
+    username: root
+    password: 1234
 
